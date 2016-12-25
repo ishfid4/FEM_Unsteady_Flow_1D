@@ -40,4 +40,40 @@ public class InputData {
             }
         }
     }
+
+    public double getRadiusMax() {
+        return radiusMax;
+    }
+
+    public double getDeltaRadius() {
+        return deltaRadius;
+    }
+
+    public double getDeltaTau() {
+        return deltaTau;
+    }
+
+    public double getC() {
+        return c;
+    }
+
+    public double getRo() {
+        return ro;
+    }
+
+    public double getK() {
+        return k;
+    }
+
+    public double getAlpha() {
+        return alpha;
+    }
+
+    public double getBeginTemperature() {
+        return beginTemperature;
+    }
+
+    public double getAmbientTemperature() {
+        return ambientTemperature;
+    }
 }
