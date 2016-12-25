@@ -87,6 +87,15 @@ public class Element {
         }
     }
 
+    public void resetKandF(){
+        for (int i = 0; i < 2; ++i){
+            fVector[i] = 0.0;
+            for (int j = 0; j < 2; ++j){
+                kMatrix[i][j] = 0.0;
+            }
+        }
+    }
+
     public Node getNode1() {
         return node1;
     }

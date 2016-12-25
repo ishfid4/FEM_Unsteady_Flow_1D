@@ -3,6 +3,7 @@ package pl.ishid.mes2;
 import javafx.util.Pair;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -35,27 +36,46 @@ public class Main {
             elements.add(new Element(i,nodeList.get(i),nodeList.get(i+1),inputData));
         }
 
-        //Calculating local K matrix and F vector
-        for (int i = 0; i < (nodeCount); ++i){
-            elements.get(i).calculateKmatrix();
-            elements.get(i).calculateFvector();
+        for (int time = 0; time < inputData.getTau(); time += inputData.getDeltaTau()) {
+            //Resetting local K and F
+            for (Element element: elements) {
+                element.resetKandF();
+            }
+
+            //Calculating local K matrix and F vector
+            for (int i = 0; i < (nodeCount); ++i) {
+                elements.get(i).calculateKmatrix();
+                elements.get(i).calculateFvector();
+            }
+
+            //Solving equation system
+            EquationSystem equationSystem = new EquationSystem(nodeCount + 1);
+            equationSystem.agregateKmatrix(elements);
+            equationSystem.agregateFvector(elements);
+            equationSystem.solveEquationSystem();
+
+            //Updating node temperatures
+            double temperatures[] = equationSystem.getTemperatureVector();
+            for (int i = 0; i <= nodeCount; ++i) {
+                nodeList.get(i).setTemperature(temperatures[i]);
+            }
+            listOfTemperaturePairs.add(new Pair<>(nodeList.get(0).getTemperature(),
+                    nodeList.get(nodeCount).getTemperature()));
         }
 
-        //Solving equation system
-        EquationSystem equationSystem = new EquationSystem(nodeCount + 1);
-        equationSystem.agregateKmatrix(elements);
-        equationSystem.agregateFvector(elements);
-        equationSystem.solveEquationSystem();
+        //Saving pairs of insideTemp and outsideTemp to file
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter("output.txt");
 
-        //Updating node temperatures
-        double temperatures[] = equationSystem.getTemperatureVector();
-        for (int i = 0; i <= nodeCount; ++i){
-            nodeList.get(i).setTemperature(temperatures[i]);
+            for (Pair p: listOfTemperaturePairs) {
+                out.println(p.getKey() + "\t" + p.getValue());
+            }
+
+        }finally {
+            if (out != null) {
+                out.close();
+            }
         }
-        listOfTemperaturePairs.add(new Pair<>(nodeList.get(0).getTemperature(),
-                nodeList.get(nodeCount).getTemperature()));
-
-
-        System.out.println("Hello");
     }
 }

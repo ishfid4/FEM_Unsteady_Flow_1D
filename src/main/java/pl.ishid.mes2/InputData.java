@@ -9,7 +9,8 @@ import java.util.Scanner;
  */
 public class InputData {
     private double radiusMax, deltaRadius;
-    private double deltaTau; //time
+    private double deltaTau; //interval time
+    private double tau;
     private double c;  //specific heat
     private double ro; //density
     private double k;
@@ -27,6 +28,7 @@ public class InputData {
             this.radiusMax = scanner.nextDouble();
             this.deltaRadius = scanner.nextDouble();
             this.deltaTau = scanner.nextDouble();
+            this.tau = scanner.nextDouble();
             this.c = scanner.nextDouble();
             this.ro = scanner.nextDouble();
             this.k = scanner.nextDouble();
@@ -75,5 +77,9 @@ public class InputData {
 
     public double getAmbientTemperature() {
         return ambientTemperature;
+    }
+
+    public double getTau() {
+        return tau;
     }
 }
