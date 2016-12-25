@@ -1,5 +1,7 @@
 package pl.ishid.mes2;
 
+import javafx.util.Pair;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -11,6 +13,7 @@ public class Main {
         InputData inputData = new InputData();
         inputData.importData("input.txt");
 
+        ArrayList<Pair<Double,Double>> listOfTemperaturePairs = new ArrayList<>(); //Pair<InsideTemp, OutsideTemp>
         ArrayList<Node> nodeList = new ArrayList<>();
         ArrayList<Element> elements = new ArrayList<>();
 
@@ -24,6 +27,7 @@ public class Main {
         //Node creation
         for (int i = 0; i <= nodeCount; ++i){
             nodeList.add(new Node(i,i * inputData.getDeltaRadius()));
+            nodeList.get(i).setTemperature(inputData.getBeginTemperature());
         }
 
         //Elements creation
@@ -37,10 +41,20 @@ public class Main {
             elements.get(i).calculateFvector();
         }
 
+        //Solving equation system
         EquationSystem equationSystem = new EquationSystem(nodeCount + 1);
         equationSystem.agregateKmatrix(elements);
         equationSystem.agregateFvector(elements);
         equationSystem.solveEquationSystem();
+
+        //Updating node temperatures
+        double temperatures[] = equationSystem.getTemperatureVector();
+        for (int i = 0; i <= nodeCount; ++i){
+            nodeList.get(i).setTemperature(temperatures[i]);
+        }
+        listOfTemperaturePairs.add(new Pair<>(nodeList.get(0).getTemperature(),
+                nodeList.get(nodeCount).getTemperature()));
+
 
         System.out.println("Hello");
     }

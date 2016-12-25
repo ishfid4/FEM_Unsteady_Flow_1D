@@ -56,4 +56,8 @@ public class EquationSystem {
         constans = constans.mapMultiply(-1);
         this.temperatureVector = solver.solve(constans).toArray();
     }
+
+    public double[] getTemperatureVector() {
+        return temperatureVector;
+    }
 }

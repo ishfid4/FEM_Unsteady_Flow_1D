@@ -73,7 +73,7 @@ public class Element {
         for (int i = 0; i < integratePoints; ++i) {
             //transformation of coordinates?
             double rp = n[0][i] * node1.getrPosition() + n[1][i] * node2.getrPosition();
-            double temperatureP = (n[0][i] * inputData.getBeginTemperature()) + (n[1][i] * inputData.getBeginTemperature());
+            double temperatureP = (n[0][i] * node1.getTemperature()) + (n[1][i] * node2.getTemperature());
 
             fVector[0] += -((inputData.getC() * inputData.getRo() * inputData.getDeltaRadius()) / inputData.getDeltaTau())
                     * temperatureP * n[0][i] * rp * weights[i];
