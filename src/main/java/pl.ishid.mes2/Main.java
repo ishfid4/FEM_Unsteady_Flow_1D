@@ -37,6 +37,11 @@ public class Main {
             elements.get(i).calculateFvector();
         }
 
+        EquationSystem equationSystem = new EquationSystem(nodeCount + 1);
+        equationSystem.agregateKmatrix(elements);
+        equationSystem.agregateFvector(elements);
+        equationSystem.solveEquationSystem();
+
         System.out.println("Hello");
     }
 }

@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cf1e92d4-1539-4fc1-90be-f550882f630c" name="Default" comment="">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/pl.ishid.mes2/EquationSystem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/mes_program_2_main.iml" afterPath="$PROJECT_DIR$/.idea/modules/mes_program_2_main.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/mes_program_2_test.iml" afterPath="$PROJECT_DIR$/.idea/modules/mes_program_2_test.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/pl.ishid.mes2/Element.java" afterPath="$PROJECT_DIR$/src/main/java/pl.ishid.mes2/Element.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/pl.ishid.mes2/Main.java" afterPath="$PROJECT_DIR$/src/main/java/pl.ishid.mes2/Main.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -957,7 +953,7 @@
       <option name="presentableId" value="Default" />
       <updated>1482593861428</updated>
       <workItem from="1482593866517" duration="10957000" />
-      <workItem from="1482661571169" duration="16107000" />
+      <workItem from="1482661571169" duration="16261000" />
     </task>
     <task id="LOCAL-00001" summary="Calculating local K matrix and F vector, dunno if it is correct">
       <created>1482674390811</created>
@@ -966,11 +962,18 @@
       <option name="project" value="LOCAL" />
       <updated>1482674390811</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Corrected some issues with shape functions">
+      <created>1482687000010</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1482687000010</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27064000" />
+    <option name="totallyTimeSpent" value="27218000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="18" width="1366" height="731" extended-state="6" />
@@ -1016,7 +1019,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Calculating local K matrix and F vector, dunno if it is correct" />
-    <option name="LAST_COMMIT_MESSAGE" value="Calculating local K matrix and F vector, dunno if it is correct" />
+    <MESSAGE value="Corrected some issues with shape functions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Corrected some issues with shape functions" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
