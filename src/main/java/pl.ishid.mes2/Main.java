@@ -36,6 +36,8 @@ public class Main {
             elements.add(new Element(i,nodeList.get(i),nodeList.get(i+1),inputData));
         }
 
+        PrintWriter kfOut = new PrintWriter("kfOut.txt");
+        //TODO: show K and F in consle?
         for (int time = 0; time < inputData.getTau(); time += inputData.getDeltaTau()) {
             //Resetting local K and F
             for (Element element: elements) {
@@ -61,6 +63,22 @@ public class Main {
             }
             listOfTemperaturePairs.add(new Pair<>(nodeList.get(0).getTemperature(),
                     nodeList.get(nodeCount).getTemperature()));
+
+            //Saving K and F to file
+            kfOut.println("Time: " + time);
+            double k[][] = equationSystem.getGlobalKmatrix();
+            double f[] = equationSystem.getGlobalFvector();
+            for (int i = 0; i < k.length; ++i){
+                for (int j = 0; j < k.length; ++j){
+                    kfOut.printf("%.3f \t", k[i][j]);
+                }
+                kfOut.println();
+            }
+            kfOut.println();
+            for (int i = 0; i < f.length; ++i){
+                kfOut.print(f[i] + "\t");
+            }
+            kfOut.println("\n");
         }
 
         //Saving pairs of insideTemp and outsideTemp to file

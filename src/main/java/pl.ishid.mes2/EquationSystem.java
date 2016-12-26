@@ -60,4 +60,12 @@ public class EquationSystem {
     public double[] getTemperatureVector() {
         return temperatureVector;
     }
+
+    public double[][] getGlobalKmatrix() {
+        return globalKmatrix;
+    }
+
+    public double[] getGlobalFvector() {
+        return globalFvector;
+    }
 }
