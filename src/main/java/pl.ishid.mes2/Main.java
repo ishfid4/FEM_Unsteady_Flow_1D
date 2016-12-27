@@ -11,6 +11,8 @@ import java.util.ArrayList;
  */
 public class Main {
     public static void main(String[] args) throws IOException {
+        PrintWriter kfOut = null;
+        PrintWriter out = null;
         InputData inputData = new InputData();
         inputData.importData("input.txt");
 
@@ -36,54 +38,54 @@ public class Main {
             elements.add(new Element(i,nodeList.get(i),nodeList.get(i+1),inputData));
         }
 
-        PrintWriter kfOut = new PrintWriter("kfOut.txt");
-        //TODO: show K and F in consle?
-        for (int time = 0; time < inputData.getTau(); time += inputData.getDeltaTau()) {
-            //Resetting local K and F
-            for (Element element: elements) {
-                element.resetKandF();
-            }
+        try {
+            kfOut = new PrintWriter("kfOut.txt");
 
-            //Calculating local K matrix and F vector
-            for (int i = 0; i < (nodeCount); ++i) {
-                elements.get(i).calculateKmatrix();
-                elements.get(i).calculateFvector();
-            }
+            //Calculating temperatures for specified period of time with pre-defined delta time
+            for (int time = 0; time < inputData.getTau(); time += inputData.getDeltaTau()) {
+                //Resetting local K and F
+                for (Element element: elements) {
+                    element.resetKandF();
+                }
 
-            //Solving equation system
-            EquationSystem equationSystem = new EquationSystem(nodeCount + 1);
-            equationSystem.agregateKmatrix(elements);
-            equationSystem.agregateFvector(elements);
-            equationSystem.solveEquationSystem();
+                //Calculating local K matrix and F vector
+                for (int i = 0; i < (nodeCount); ++i) {
+                    elements.get(i).calculateKmatrix();
+                    elements.get(i).calculateFvector();
+                }
 
-            //Updating node temperatures
-            double temperatures[] = equationSystem.getTemperatureVector();
-            for (int i = 0; i <= nodeCount; ++i) {
-                nodeList.get(i).setTemperature(temperatures[i]);
-            }
-            listOfTemperaturePairs.add(new Pair<>(nodeList.get(0).getTemperature(),
-                    nodeList.get(nodeCount).getTemperature()));
+                //Solving equation system
+                EquationSystem equationSystem = new EquationSystem(nodeCount + 1);
+                equationSystem.agregateKmatrix(elements);
+                equationSystem.agregateFvector(elements);
+                equationSystem.solveEquationSystem();
 
-            //Saving K and F to file
-            kfOut.println("Time: " + time);
-            double k[][] = equationSystem.getGlobalKmatrix();
-            double f[] = equationSystem.getGlobalFvector();
-            for (int i = 0; i < k.length; ++i){
-                for (int j = 0; j < k.length; ++j){
-                    kfOut.printf("%.3f \t", k[i][j]);
+                //Updating node temperatures
+                double temperatures[] = equationSystem.getTemperatureVector();
+                for (int i = 0; i <= nodeCount; ++i) {
+                    nodeList.get(i).setTemperature(temperatures[i]);
+                }
+                listOfTemperaturePairs.add(new Pair<>(nodeList.get(0).getTemperature(),
+                        nodeList.get(nodeCount).getTemperature()));
+
+                //Saving K and F to file
+                kfOut.println("Time: " + (time + inputData.getDeltaTau()));
+                double k[][] = equationSystem.getGlobalKmatrix();
+                double f[] = equationSystem.getGlobalFvector();
+                for (int i = 0; i < k.length; ++i){
+                    for (int j = 0; j < k.length; ++j){
+                        kfOut.printf("%.3f \t", k[i][j]);
+                    }
+                    kfOut.println();
                 }
                 kfOut.println();
+                for (int i = 0; i < f.length; ++i){
+                    kfOut.print(f[i] + "\t");
+                }
+                kfOut.println("\n");
             }
-            kfOut.println();
-            for (int i = 0; i < f.length; ++i){
-                kfOut.print(f[i] + "\t");
-            }
-            kfOut.println("\n");
-        }
 
-        //Saving pairs of insideTemp and outsideTemp to file
-        PrintWriter out = null;
-        try {
+            //Saving pairs of insideTemp and outsideTemp to file
             out = new PrintWriter("output.txt");
 
             for (Pair p: listOfTemperaturePairs) {
@@ -93,6 +95,9 @@ public class Main {
         }finally {
             if (out != null) {
                 out.close();
+            }
+            if (kfOut != null) {
+                kfOut.close();
             }
         }
     }
