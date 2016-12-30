@@ -68,10 +68,11 @@ public class Main {
                 listOfTemperaturePairs.add(new Pair<>(nodeList.get(0).getTemperature(),
                         nodeList.get(nodeCount).getTemperature()));
 
-                //Saving K and F to file
+                //Saving K, F and t to file
                 kfOut.println("Time: " + (time + inputData.getDeltaTau()));
                 double k[][] = equationSystem.getGlobalKmatrix();
                 double f[] = equationSystem.getGlobalFvector();
+                double t[] = equationSystem.getTemperatureVector();
                 for (int i = 0; i < k.length; ++i){
                     for (int j = 0; j < k.length; ++j){
                         kfOut.printf("%.3f \t", k[i][j]);
@@ -81,6 +82,10 @@ public class Main {
                 kfOut.println();
                 for (int i = 0; i < f.length; ++i){
                     kfOut.print(f[i] + "\t");
+                }
+                kfOut.println("\n");
+                for (int i = 0; i < t.length; ++i){
+                    kfOut.print(t[i] + "\t");
                 }
                 kfOut.println("\n");
             }
