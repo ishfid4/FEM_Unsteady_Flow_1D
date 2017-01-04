@@ -20,11 +20,6 @@ public class Main {
         ArrayList<Node> nodeList = new ArrayList<>();
         ArrayList<Element> elements = new ArrayList<>();
 
-        if (inputData.getRadiusMax() % inputData.getDeltaRadius() == 0){
-            System.out.println("Node count ok");
-        }else{
-            System.out.println("Node count is NOT whole number!!!!");
-        }
         int nodeCount = (int)(inputData.getRadiusMax() / inputData.getDeltaRadius());
 
         //Node creation
