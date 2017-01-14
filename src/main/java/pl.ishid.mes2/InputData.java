@@ -2,6 +2,7 @@ package pl.ishid.mes2;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -11,7 +12,7 @@ public class InputData {
     private double radiusMax, deltaRadius;
     private double deltaTau; //interval time
     private double tau;
-    private double c;  //specific heat
+    private double c;  //specific heat capacity
     private double ro; //density
     private double k;
     private double alpha;
@@ -24,6 +25,7 @@ public class InputData {
         try {
             in = new FileInputStream(path);
             scanner = new Scanner(in);
+            scanner.useLocale(Locale.ENGLISH);
 
             this.radiusMax = scanner.nextDouble();
             this.deltaRadius = scanner.nextDouble();

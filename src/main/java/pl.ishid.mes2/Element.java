@@ -26,7 +26,6 @@ public class Element {
         }
     }
 
-    //TODO: consider if it should be moved
     //For integration
     private int integratePoints = 2;
     private double weights[] = {1,1};
@@ -37,7 +36,7 @@ public class Element {
 
     public void calculateKmatrix(){
         for (int i = 0; i < integratePoints; ++i){
-            //transformation of coordinates?
+            //transformation of coordinates
             double rp = n[0][i] * node1.getrPosition() + n[1][i] * node2.getrPosition();
 
             kMatrix[0][0] += (inputData.getK() / inputData.getDeltaRadius())
