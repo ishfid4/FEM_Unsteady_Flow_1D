@@ -7,6 +7,9 @@ public class Element {
     private int id;
     private Node node1, node2;
     private InputData inputData;
+    private  double c = 700;
+    private double ro = 7800;
+    private  double k = 25;
     private double kMatrix[][];
     private double fVector[];
 
@@ -39,24 +42,24 @@ public class Element {
             //transformation of coordinates
             double rp = n[0][i] * node1.getrPosition() + n[1][i] * node2.getrPosition();
 
-            kMatrix[0][0] += (inputData.getK() / inputData.getDeltaRadius())
+            kMatrix[0][0] += (node1.getK() / inputData.getDeltaRadius())
                     * (rp * weights[i])
-                    + ((inputData.getC() * inputData.getRo() * inputData.getDeltaRadius()) / inputData.getDeltaTau())
+                    + ((node1.getC() * node1.getRo() * inputData.getDeltaRadius()) / inputData.getDeltaTau())
                     * n[0][i] * n[0][i] * rp * weights[i];
 
-            kMatrix[0][1] += -(inputData.getK() / inputData.getDeltaRadius())
+            kMatrix[0][1] += -(node1.getK() / inputData.getDeltaRadius())
                     * (rp * weights[i])
-                    + ((inputData.getC() * inputData.getRo() * inputData.getDeltaRadius()) / inputData.getDeltaTau())
+                    + ((node1.getC() * node1.getRo() * inputData.getDeltaRadius()) / inputData.getDeltaTau())
                     * n[0][i] * n[1][i] * rp * weights[i];
 
-            kMatrix[1][0] += -(inputData.getK() / inputData.getDeltaRadius())
+            kMatrix[1][0] += -(node1.getK() / inputData.getDeltaRadius())
                     * (rp * weights[i])
-                    + ((inputData.getC() * inputData.getRo() * inputData.getDeltaRadius()) / inputData.getDeltaTau())
+                    + ((node1.getC() * node1.getRo() * inputData.getDeltaRadius()) / inputData.getDeltaTau())
                     * n[0][i] * n[1][i] * rp * weights[i];
 
-            kMatrix[1][1] += (inputData.getK() / inputData.getDeltaRadius())
+            kMatrix[1][1] += (node1.getK() / inputData.getDeltaRadius())
                     * (rp * weights[i])
-                    + (((inputData.getC() * inputData.getRo() * inputData.getDeltaRadius()) / inputData.getDeltaTau())
+                    + (((node1.getC() * node1.getRo() * inputData.getDeltaRadius()) / inputData.getDeltaTau())
                     * n[1][i] * n[1][i] * rp * weights[i]);
 
         }
@@ -73,10 +76,10 @@ public class Element {
             double rp = n[0][i] * node1.getrPosition() + n[1][i] * node2.getrPosition();
             double temperatureP = (n[0][i] * node1.getTemperature()) + (n[1][i] * node2.getTemperature());
 
-            fVector[0] += -((inputData.getC() * inputData.getRo() * inputData.getDeltaRadius()) / inputData.getDeltaTau())
+            fVector[0] += -((node1.getC() * node1.getRo() * inputData.getDeltaRadius()) / inputData.getDeltaTau())
                     * temperatureP * n[0][i] * rp * weights[i];
 
-            fVector[1] += -((inputData.getC() * inputData.getRo() * inputData.getDeltaRadius()) / inputData.getDeltaTau())
+            fVector[1] += -((node1.getC() * node1.getRo() * inputData.getDeltaRadius()) / inputData.getDeltaTau())
                     * temperatureP * n[1][i] * rp * weights[i];
         }
         //boundary condition

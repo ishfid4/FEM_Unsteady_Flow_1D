@@ -21,11 +21,23 @@ public class Main {
         ArrayList<Element> elements = new ArrayList<>();
 
         int nodeCount = (int)(inputData.getRadiusMax() / inputData.getDeltaRadius());
+//        //Node creation
+//        for (int i = 0; i <= nodeCount; ++i){
+//            nodeList.add(new Node(i,i * inputData.getDeltaRadius()));
+//            nodeList.get(i).setTemperature(inputData.getBeginTemperature());
+//        }
 
-        //Node creation
-        for (int i = 0; i <= nodeCount; ++i){
-            nodeList.add(new Node(i,i * inputData.getDeltaRadius()));
-            nodeList.get(i).setTemperature(inputData.getBeginTemperature());
+//        //Node creation
+        int materialCount = inputData.getMaterialCount();
+        int nodeId = 0;
+        for (int i = 0; i < materialCount; ++i){
+            for (int j = 0; j <= inputData.getX()[i]; ++j){
+                nodeList.add(new Node(nodeId, nodeId * inputData.getDeltaRadius(),
+                        inputData.getC()[i], inputData.getRo()[i], inputData.getK()[i]));
+                nodeList.get(nodeId).setTemperature(inputData.getBeginTemperature());
+
+                nodeId++;
+            }
         }
 
         //Elements creation
@@ -55,10 +67,22 @@ public class Main {
                 equationSystem.agregateFvector(elements);
                 equationSystem.solveEquationSystem();
 
-                //Updating node temperatures
+
                 double temperatures[] = equationSystem.getTemperatureVector();
+                //Average temp
+                double avgtemp = 0.0;
+                for (int i = 0; i < inputData.getX()[0]; ++i) {
+                    avgtemp += temperatures[i];
+                }
+                avgtemp = avgtemp / (double)inputData.getX()[0];
+
+                //Updating node temperatures
                 for (int i = 0; i <= nodeCount; ++i) {
-                    nodeList.get(i).setTemperature(temperatures[i]);
+                    if (i < inputData.getX()[0]){
+                        nodeList.get(i).setTemperature(avgtemp);
+                    }else{
+                        nodeList.get(i).setTemperature(temperatures[i]);
+                    }
                 }
                 listOfTemperaturePairs.add(new Pair<>(nodeList.get(0).getTemperature(),
                         nodeList.get(nodeCount).getTemperature()));

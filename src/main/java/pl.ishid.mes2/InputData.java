@@ -12,15 +12,23 @@ public class InputData {
     private double radiusMax, deltaRadius;
     private double deltaTau; //interval time
     private double tau;
-    private double c;  //specific heat capacity
-    private double ro; //density
-    private double k;
+    private int materialCount;
+    private int x[];  //thickness of material
+    private double c[];  //specific heat capacity
+    private double ro[]; //density
+    private double k[];
+
+//    private double c;  //specific heat capacity
+//    private double ro; //density
+//    private double k;
+
     private double alpha;
     private double beginTemperature, ambientTemperature;
 
     public void importData(String path) throws IOException {
         FileInputStream in = null;
         Scanner scanner;
+        double tempC, tempRo, tempK;
 
         try {
             in = new FileInputStream(path);
@@ -31,9 +39,29 @@ public class InputData {
             this.deltaRadius = scanner.nextDouble();
             this.deltaTau = scanner.nextDouble();
             this.tau = scanner.nextDouble();
-            this.c = scanner.nextDouble();
-            this.ro = scanner.nextDouble();
-            this.k = scanner.nextDouble();
+
+//            this.c = scanner.nextDouble();
+//            this.ro = scanner.nextDouble();
+//            this.k = scanner.nextDouble();
+
+            this.materialCount = scanner.nextInt();
+            this.x = new int[materialCount];
+            this.c = new double[materialCount];
+            this.ro = new double[materialCount];
+            this.k = new double[materialCount];
+
+            for (int i = 0; i < materialCount; ++i) {
+                this.x[i] = scanner.nextInt();
+                tempC = scanner.nextDouble();
+                tempRo = scanner.nextDouble();
+                tempK = scanner.nextDouble();
+                for (int j = 0; j < x[i]; ++j) {
+                    c[i] = tempC;
+                    ro[i] = tempRo;
+                    k[i] = tempK;
+                }
+            }
+
             this.alpha = scanner.nextDouble();
             this.beginTemperature = scanner.nextDouble();
             this.ambientTemperature = scanner.nextDouble();
@@ -57,17 +85,38 @@ public class InputData {
         return deltaTau;
     }
 
-    public double getC() {
+    public int getMaterialCount() {
+        return materialCount;
+    }
+
+    public int[] getX() {
+        return x;
+    }
+
+    public double[] getC() {
         return c;
     }
 
-    public double getRo() {
+    public double[] getRo() {
         return ro;
     }
 
-    public double getK() {
+    public double[] getK() {
         return k;
     }
+
+
+//    public double getC() {
+//        return c;
+//    }
+//
+//    public double getRo() {
+//        return ro;
+//    }
+//
+//    public double getK() {
+//        return k;
+//    }
 
     public double getAlpha() {
         return alpha;
