@@ -21,13 +21,8 @@ public class Main {
         ArrayList<Element> elements = new ArrayList<>();
 
         int nodeCount = (int)(inputData.getRadiusMax() / inputData.getDeltaRadius());
-//        //Node creation
-//        for (int i = 0; i <= nodeCount; ++i){
-//            nodeList.add(new Node(i,i * inputData.getDeltaRadius()));
-//            nodeList.get(i).setTemperature(inputData.getBeginTemperature());
-//        }
 
-//        //Node creation
+        //Node creation
         int materialCount = inputData.getMaterialCount();
         int nodeId = 0;
         for (int i = 0; i < materialCount; ++i){
